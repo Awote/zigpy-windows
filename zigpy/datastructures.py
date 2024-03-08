@@ -261,8 +261,10 @@ class Debouncer:
 
         # Otherwise, queue it
         self._times[obj] = now + expire_in
-        heapq.heappush(self._queue, (-(now + expire_in), obj))
-
+        try:
+            heapq.heappush(self._queue, (-(now + expire_in), obj))
+        except:
+            pass
         return False
 
     def __repr__(self) -> str:
