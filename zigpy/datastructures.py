@@ -1,4 +1,5 @@
 """Primitive data structures."""
+
 from __future__ import annotations
 
 import asyncio
@@ -7,6 +8,7 @@ import functools
 import heapq
 import types
 import typing
+from random import uniform
 
 
 class WrappedContextManager:
@@ -264,7 +266,8 @@ class Debouncer:
         try:
             heapq.heappush(self._queue, (-(now + expire_in), obj))
         except:
-            pass
+            now += self._loop.time() + uniform(0.0001, 0.000001)
+            self._times[obj] = now + expire_in
         return False
 
     def __repr__(self) -> str:
